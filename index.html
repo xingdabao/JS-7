@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        
+        body {
+            padding: 50px;
+        }
+        
+        li {
+            list-style: none;
+        }
+        
+        div {
+            position: relative;
+            width: 400px;
+            height: 320px;
+            overflow: hidden;
+        }
+        
+        ul.image {
+            position: relative;
+        }
+        
+        ul.image li {
+            position: absolute;
+            left: 0;
+            opacity: 0;
+        }
+        
+        ul.image li img {
+            width: 400px;
+            height: 320px;
+        }
+        
+        ul.image li.opa {
+            opacity: 1;
+        }
+        
+        .pre,
+        .next {
+            position: absolute;
+            top: 45%;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            font-size: 40px;
+            color: rgb(243, 237, 237);
+            cursor: pointer;
+        }
+        
+        .pre :hover,
+        .next :hover {
+            background-color: rgba(121, 121, 121, 0.5);
+        }
+        
+        .next {
+            right: 0;
+        }
+        
+        #nav {
+            position: absolute;
+            bottom: 10px;
+            list-style: none;
+        }
+        
+        #nav li {
+            float: left;
+            width: 10px;
+            height: 10px;
+            background: rgb(219, 214, 214);
+            margin: 0 5px;
+            border-radius: 50px;
+        }
+        
+        #nav li.active {
+            background-color: rgb(68, 182, 235);
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <ul id="image" class="image">
+            <li><img src="images/1.jpg.webp" alt="" /></li>
+            <li><img src="images/2.jpg.webp" alt="" /></li>
+            <li><img src="images/3.jpg.webp" alt="" /></li>
+            <li><img src="images/4.jpg" alt="" /></li>
+            <li><img src="images/5.jpg.webp" alt="" /></li>
+            <li><img src="images/6.jpg.webp" alt="" /></li>
+            <li><img src="images/7.jpg.webp" alt="" /></li>
+            <li><img src="images/8.jpg.webp" alt="" /></li>
+        </ul>
+        <div id="pre" class="pre">
+            <</div>
+                <div id="next" class="next">></div>
+                <ul id="nav">
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+        </div>
+
+</body>
+<script src="js/jquery.js"></script>
+<script>
+    //初始化
+    var index = 0;
+    var t;
+    var length = 8;
+
+    $('#image li').eq(index).addClass('opa');
+    $('#nav li').eq(index).addClass('active')
+
+    //自动切换图片
+    setInterval(autoMove, 3000);
+
+    function autoMove() {
+
+        index++;
+        if (index >= length) index = 0;
+        changeTo(index);
+        navChange(index);
+
+    }
+
+    function navChange(index) {
+        $('#nav li').eq(index).addClass('active').siblings().removeClass('active');
+    }
+
+    function changeTo(index) {
+        $('#image li').eq(index).addClass('opa').siblings().removeClass('opa');
+    }
+    $('#pre').click(function() {
+        index--;
+        if (index < 0) index = length - 1;
+        changeTo(index);
+        navChange(index);
+    });
+    $('#next').click(function() {
+        index++;
+        if (index >= length) index = 0;
+        changeTo(index);
+        navChange(index);
+    });
+</script>
+
+</html>
